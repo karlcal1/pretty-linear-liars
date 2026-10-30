@@ -1,11 +1,4 @@
-# Reproduce every figure and Table 1 of "Pretty Linear Liars".
-#   make data      download the Mess3 checkpoint and the birth-year prompts
-#   make hmm       Mess3 HMM experiments (CPU, ~15 min) -> results/hmm_*, figures 3 and 4
-#   make llm       Llama-2-7B experiments (Apple-silicon GPU or CUDA, ~2 h) -> results/llm_*
-#   make figures   figures 1, 2, 5, 6, 7, 8, 9 from results/
-#   make table     Table 1 from results/
-#   make all       everything above
-#   make smoke     every script at toy sizes (~5 min; needs the Llama weights) -> results/smoke, figures/smoke
+# Targets are described in README.md.
 PY ?= .venv/bin/python
 export PYTHONPATH := .
 
