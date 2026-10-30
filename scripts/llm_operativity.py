@@ -11,13 +11,13 @@ import torch
 
 from pll.llama import (PROBE_LAYER, RIDGE_LAMBDA, digit_token_ids, expected_decade, load_birth_year_entities,
                        load_llama, name_final_indices)
-from pll.paths import RESULTS_DIR, ensure_output_dirs
+from pll.paths import RESULTS_DIR, ensure_output_dirs, smoke
 from pll.probes import principal_components, ridge_weights, unit
 
-N_TOP = 100
-N_DUST = 20
-N_SWAPS = 150
-POOL = 300
+N_TOP = smoke(4, 100)
+N_DUST = smoke(2, 20)
+N_SWAPS = smoke(8, 150)
+POOL = smoke(16, 300)
 
 
 def main():

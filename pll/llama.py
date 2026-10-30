@@ -13,7 +13,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from pll.paths import BIRTH_YEAR_FILES, LLAMA_MODEL_ID
+from pll.paths import BIRTH_YEAR_FILES, LLAMA_MODEL_ID, smoke
 
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
@@ -27,9 +27,10 @@ else:
 
 PROMPT_SUFFIX = " was born in 19"
 PROBE_LAYER = 8
-N_ENTITIES = 8000
+N_ENTITIES = smoke(48, 8000)
 RIDGE_LAMBDA = 1e4          # the intervention-optimal penalty (Figure 2)
-LAMBDA_GRID = [10.0 ** exponent for exponent in range(-3, 9)]
+LAMBDA_GRID = smoke([1e2, 1e4, 1e6], [10.0 ** exponent for exponent in range(-3, 9)])
+DAS_STEPS = smoke(4, 500)
 BATCH_SIZE = 8
 
 
@@ -165,7 +166,7 @@ def interchange_delta(activations, direction, base_idx, source_idx):
 
 
 def train_das_direction(model, tokenizer, names, decades, activations, positions, layer, digit_ids,
-                        seed, steps=500, batch_size=12, learning_rate=1e-2, projector=None):
+                        seed, steps=DAS_STEPS, batch_size=12, learning_rate=1e-2, projector=None):
     """Distributed Alignment Search for a single unit direction.
 
     Random init; Adam on the MSE between the expected decade after a base<-source interchange and the

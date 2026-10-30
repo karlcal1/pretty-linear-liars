@@ -9,12 +9,12 @@ import torch
 from pll.llama import (PROBE_LAYER, decades_of, digit_token_ids, expected_decade, interchange_delta,
                        interchange_metrics, load_birth_year_entities, load_llama, name_final_indices,
                        DEVICE, train_das_direction)
-from pll.paths import RESULTS_DIR, ensure_output_dirs
+from pll.paths import RESULTS_DIR, ensure_output_dirs, smoke
 from pll.probes import principal_components, unit
 
-N_COMPONENTS = 100
-N_PAIRS = 150
-STEPS = 120
+N_COMPONENTS = smoke(8, 100)
+N_PAIRS = smoke(12, 150)
+STEPS = smoke(4, 120)
 
 
 def main():

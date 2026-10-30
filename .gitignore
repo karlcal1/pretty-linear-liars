@@ -8,3 +8,5 @@ data/wikidata/
 # large cache of Llama activations written by scripts/llm_sweep.py (~130 MB)
 results/llm_activations.npz
 results/*.log
+results/smoke/
+figures/smoke/

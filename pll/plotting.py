@@ -21,7 +21,7 @@ METHOD_ORDER = ["OLS", "ridge", "DAS"]
 
 
 def save_figure(fig, filename, dpi=200):
-    FIGURES_DIR.mkdir(exist_ok=True)
+    FIGURES_DIR.mkdir(parents=True, exist_ok=True)
     path = FIGURES_DIR / filename
     fig.savefig(path, dpi=dpi, bbox_inches="tight", pad_inches=0.03)
     plt.close(fig)

@@ -8,11 +8,11 @@ import json
 import numpy as np
 
 from pll.mess3 import corner_start_sequences, grid_intervention_loss, load_testbed, simplex_grid
-from pll.paths import RESULTS_DIR, ensure_output_dirs
+from pll.paths import RESULTS_DIR, ensure_output_dirs, smoke
 from pll.probes import fit_belief_probe, mean_variance_along_rows, steering_map, weighted_probe_loss
 
-LAMBDAS = [0.0] + [10.0 ** exponent for exponent in range(-7, 6)]
-GRID_RESOLUTION = 30
+LAMBDAS = smoke([0.0, 0.1], [0.0] + [10.0 ** exponent for exponent in range(-7, 6)])
+GRID_RESOLUTION = smoke(6, 30)
 
 
 def main():

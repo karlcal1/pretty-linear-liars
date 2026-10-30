@@ -5,12 +5,16 @@
 #   make figures   figures 1, 2, 5, 6, 7, 8, 9 from results/
 #   make table     Table 1 from results/
 #   make all       everything above
+#   make smoke     every script at toy sizes (~5 min; needs the Llama weights) -> results/smoke, figures/smoke
 PY ?= .venv/bin/python
 export PYTHONPATH := .
 
-.PHONY: all data hmm llm figures table
+.PHONY: all data hmm llm figures table smoke
 
 all: data hmm llm figures table
+
+smoke:
+	PLL_SMOKE=1 $(MAKE) hmm llm figures table
 
 data:
 	$(PY) data/download_data.py

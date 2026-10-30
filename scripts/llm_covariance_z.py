@@ -30,6 +30,7 @@ def main():
     n = len(second)
     covariance = (projections * target_second[:, None]).mean(axis=0)
     sigma = projections.std(axis=0)
+    sigma[sigma == 0] = np.inf  # directions with no variance (only possible with very few prompts) get z = 0
     z = np.sqrt(n) * covariance / (sigma * target_second.std())
     np.save(RESULTS_DIR / "llm_covariance_z.npy", z)
     print(f"{int((np.abs(z) <= 3).sum())} of {len(z)} PCs within 3 standard errors of zero")

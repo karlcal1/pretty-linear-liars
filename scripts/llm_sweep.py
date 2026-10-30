@@ -18,10 +18,10 @@ import torch
 from pll.llama import (LAMBDA_GRID, PROBE_LAYER, cache_activations, decades_of, digit_token_ids,
                        expected_decade, interchange_delta, interchange_metrics, load_birth_year_entities,
                        load_llama, standardize, train_das_direction)
-from pll.paths import RESULTS_DIR, ensure_output_dirs
+from pll.paths import RESULTS_DIR, ensure_output_dirs, smoke
 from pll.probes import best_affine_mse, ols_weights, orient_toward_target, ridge_weights, unit
 
-N_PAIRS = 200
+N_PAIRS = smoke(12, 200)
 TRAIN_FRACTION = 0.7
 
 

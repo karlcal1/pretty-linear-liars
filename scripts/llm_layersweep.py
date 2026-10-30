@@ -10,12 +10,12 @@ import torch
 
 from pll.llama import (RIDGE_LAMBDA, cache_activations, decades_of, digit_token_ids, expected_decade,
                        interchange_delta, interchange_metrics, load_birth_year_entities, load_llama, standardize)
-from pll.paths import RESULTS_DIR, ensure_output_dirs
-from pll.probes import ridge_weights, unit
+from pll.paths import RESULTS_DIR, ensure_output_dirs, smoke
+from pll.probes import best_affine_mse, ridge_weights, unit
 
-N_ENTITIES = 3000
-N_PAIRS = 200
-LAYERS = [0, 2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 28]
+N_ENTITIES = smoke(48, 3000)
+N_PAIRS = smoke(12, 200)
+LAYERS = smoke([0, 8], [0, 2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 28])
 
 
 def main():
@@ -37,9 +37,9 @@ def main():
     for layer in LAYERS:
         activations, positions = cache_activations(model, tokenizer, names, layer)
         X = activations - activations.mean(axis=0)
-        weights = ridge_weights(X, target, RIDGE_LAMBDA)
-        probe_loss = float(np.mean((X @ weights - target) ** 2))  # in-sample readout MSE
-        direction = unit(weights)
+        direction = unit(ridge_weights(X, target, RIDGE_LAMBDA))
+        # in-sample best scale-and-bias readout along the direction; equals 1 - corr^2 for a standardized target
+        probe_loss = best_affine_mse(direction, X, target, X, target)
         decodability = float(abs(np.corrcoef(X @ direction, target)[0, 1]))
         base_positions = [positions[i] for i in base_idx]
         baseline = expected_decade(model, tokenizer, base_names, digit_ids, layer)

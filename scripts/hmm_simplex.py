@@ -10,12 +10,12 @@ from sklearn.linear_model import LinearRegression
 
 from pll.mess3 import (MAX_LENGTH, PROBE_SITE, beliefs_along_sequences, load_testbed, sample_sequences,
                        simplex_to_2d)
-from pll.paths import RESULTS_DIR, ensure_output_dirs
+from pll.paths import RESULTS_DIR, ensure_output_dirs, smoke
 from pll.plotting import save_figure
 from pll.probes import fit_belief_probe, weighted_probe_loss
 
 SELECTED_LAMBDA = 0.1
-N_SAMPLED_SEQUENCES = 120000
+N_SAMPLED_SEQUENCES = smoke(2000, 120000)
 X_RANGE = (-0.18, 1.18)
 Y_RANGE = (-0.12, 1.00)
 

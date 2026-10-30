@@ -10,11 +10,11 @@ import numpy as np
 
 from pll.mess3 import (MAX_LENGTH, load_testbed, next_token_distribution, output_distribution,
                        sample_sequences, beliefs_along_sequences, steered_output_distribution)
-from pll.paths import RESULTS_DIR, ensure_output_dirs
+from pll.paths import RESULTS_DIR, ensure_output_dirs, smoke
 from pll.probes import fit_belief_probe, steering_map
 
 SELECTED_LAMBDA = 0.1
-N_STARTS = 20
+N_STARTS = smoke(2, 20)
 STRENGTHS = np.linspace(0, 0.5, 21)
 
 

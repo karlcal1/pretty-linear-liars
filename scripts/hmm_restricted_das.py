@@ -10,12 +10,12 @@ import torch.nn as nn
 
 from pll.mess3 import (MAX_LENGTH, beliefs_along_sequences, load_testbed, next_token_distribution,
                        output_distribution, sample_sequences, steered_output_distribution, PROBE_SITE)
-from pll.paths import RESULTS_DIR, ensure_output_dirs
+from pll.paths import RESULTS_DIR, ensure_output_dirs, smoke
 from pll.probes import fit_belief_probe, principal_components, probe_mass_per_component
 
-N_STARTS = 20
+N_STARTS = smoke(2, 20)
 STRENGTHS = np.linspace(0, 0.5, 21)
-STEPS = 600
+STEPS = smoke(20, 600)
 MASS_FRACTIONS = (0.99, 0.999)
 
 # orthonormal basis of the simplex tangent plane (belief shifts sum to zero)

@@ -17,13 +17,13 @@ from sklearn.linear_model import LinearRegression
 
 from pll.mess3 import (corner_start_sequences, grid_intervention_loss, load_testbed,
                        next_token_distribution, simplex_grid)
-from pll.paths import RESULTS_DIR, ensure_output_dirs
+from pll.paths import RESULTS_DIR, ensure_output_dirs, smoke
 from pll.probes import fit_belief_probe, principal_angles_deg, steering_map
 
-LAMBDAS = [0.0] + [10.0 ** exponent for exponent in range(-7, 6)]
+LAMBDAS = smoke([0.0, 0.1], [0.0] + [10.0 ** exponent for exponent in range(-7, 6)])
 SELECTED_LAMBDA = 0.1
-N_SEEDS = 8
-STEPS = 4000
+N_SEEDS = smoke(1, 8)
+STEPS = smoke(30, 4000)
 BATCH = 1024
 LEARNING_RATE = 1e-2
 SUBSPACE_DIM = 2
@@ -93,7 +93,7 @@ def main():
     # Intervention loss under the same grid protocol as the ridge sweep.
     start_tokens, start_beliefs = corner_start_sequences(T)
     interv_mse, _ = grid_intervention_loss(model, T, das_steering, start_tokens, start_beliefs,
-                                           simplex_grid(30))
+                                           simplex_grid(smoke(6, 30)))
 
     # Principal angles between the ridge/OLS steering subspaces and the DAS plane, across lambda.
     W_ols, _ = fit_belief_probe(data.activations, data.beliefs, data.probabilities, 0.0)

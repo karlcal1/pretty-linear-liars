@@ -8,12 +8,12 @@ from scipy.stats import spearmanr
 
 from pll.mess3 import (MAX_LENGTH, last_token_activations, load_testbed, output_distribution,
                        sample_sequences, steered_output_distribution)
-from pll.paths import RESULTS_DIR, ensure_output_dirs
+from pll.paths import RESULTS_DIR, ensure_output_dirs, smoke
 from pll.probes import fit_belief_probe, principal_components, probe_mass_per_component
 
 SELECTED_LAMBDA = 0.1
-POOL_SIZE = 600
-N_PAIRS = 1000
+POOL_SIZE = smoke(50, 600)
+N_PAIRS = smoke(50, 1000)
 
 
 def main():

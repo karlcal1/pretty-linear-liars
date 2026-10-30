@@ -10,10 +10,10 @@ import torch
 
 from pll.llama import (PROBE_LAYER, RIDGE_LAMBDA, decades_of, digit_token_ids, expected_decade, interchange_delta,
                        interchange_metrics, load_birth_year_entities, load_llama, name_final_indices, standardize)
-from pll.paths import RESULTS_DIR, ensure_output_dirs
+from pll.paths import RESULTS_DIR, ensure_output_dirs, smoke
 from pll.probes import ols_weights, orient_toward_target, ridge_weights, unit
 
-N_PAIRS = 400
+N_PAIRS = smoke(12, 400)
 
 
 def main():

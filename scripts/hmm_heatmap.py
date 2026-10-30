@@ -9,12 +9,12 @@ import numpy as np
 
 from pll.mess3 import (corner_start_sequences, load_testbed, next_token_distribution, simplex_grid,
                        simplex_to_2d, steered_output_distribution)
-from pll.paths import ensure_output_dirs
+from pll.paths import ensure_output_dirs, smoke
 from pll.plotting import save_figure
 from pll.probes import fit_belief_probe, steering_map
 
 SELECTED_LAMBDA = 0.1
-GRID_RESOLUTION = 34
+GRID_RESOLUTION = smoke(6, 34)
 
 
 def error_field(model, T, steering, start_tokens, start_belief, grid):
