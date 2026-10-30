@@ -1,0 +1,13 @@
+# Pinned to the versions used for the paper's runs (macOS arm64, Python 3.13).
+torch==2.14.1
+transformers==4.57.3
+transformer-lens==2.17.0
+huggingface_hub<1.0
+accelerate==1.12.0
+safetensors==0.7.0
+sentencepiece==0.2.1
+numpy==2.3.2
+scipy==1.18.1
+scikit-learn==1.7.1
+pandas==2.3.3
+matplotlib==3.10.6
