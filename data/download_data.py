@@ -5,9 +5,9 @@
 Llama-2-7B itself is downloaded by `transformers` the first time a Llama script runs (~13 GB).
 """
 import shutil
-import urllib.request
 from pathlib import Path
 
+import requests
 from huggingface_hub import snapshot_download
 
 DATA_DIR = Path(__file__).resolve().parent
@@ -37,7 +37,10 @@ def fetch_birth_year_prompts():
     target_dir.mkdir(exist_ok=True)
     for filename in WIKIDATA_FILES:
         destination = target_dir / filename
-        urllib.request.urlretrieve(WIKIDATA_BASE + filename, destination)
+        # requests ships its own CA bundle; the standard library fails on python.org macOS installs without certificates
+        response = requests.get(WIKIDATA_BASE + filename, timeout=60)
+        response.raise_for_status()
+        destination.write_bytes(response.content)
         print(f"  {destination} ({destination.stat().st_size / 1e6:.1f} MB)")
 
 
